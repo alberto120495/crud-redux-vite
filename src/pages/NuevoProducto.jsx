@@ -1,11 +1,33 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { crearNuevoProductoAction } from "../actions/productoActions";
+
 function NuevoProducto() {
+  const [formProduct, setFormProduct] = useState({
+    producto: "",
+    precio: 0,
+  });
+  const dispatch = useDispatch();
+
+  const agregarProducto = (producto) =>
+    dispatch(crearNuevoProductoAction(producto));
+
+  const submitNuevoProducto = (e) => {
+    e.preventDefault();
+    if (formProduct.producto === "" || formProduct.precio === 0) {
+      alert("Por favor, llene todos los campos");
+      return;
+    }
+    agregarProducto(formProduct);
+  };
+
   return (
     <div className="row justify-content-center">
       <div className="col-md-8">
         <div className="card">
           <div className="card-body">
             <h2 className="text-center mb-4 ">Agregar Nuevo Producto</h2>
-            <form>
+            <form onSubmit={submitNuevoProducto}>
               <div className="form-group">
                 <label htmlFor="producto">Nombre Producto</label>
                 <input
@@ -14,6 +36,13 @@ function NuevoProducto() {
                   placeholder="Nombre del Producto"
                   name="producto"
                   id="producto"
+                  value={formProduct.nombre}
+                  onChange={(e) =>
+                    setFormProduct({
+                      ...formProduct,
+                      [e.target.name]: e.target.value,
+                    })
+                  }
                 />
               </div>
               <div className="form-group">
@@ -24,6 +53,13 @@ function NuevoProducto() {
                   placeholder="Precio del Producto"
                   name="precio"
                   id="precio"
+                  value={formProduct.precio}
+                  onChange={(e) =>
+                    setFormProduct({
+                      ...formProduct,
+                      [e.target.name]: Number(e.target.value),
+                    })
+                  }
                 />
               </div>
               <input

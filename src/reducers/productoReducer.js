@@ -1,3 +1,5 @@
+import { types } from "../types";
+
 const initalState = {
   productos: [],
   loading: false,
@@ -6,6 +8,10 @@ const initalState = {
 
 export default function (state = initalState, action) {
   switch (action.type) {
+    case types.AGREGAR_PRODUCTO:
+      return {
+        ...state,
+      };
     default:
       return state;
   }

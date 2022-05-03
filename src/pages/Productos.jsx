@@ -1,3 +1,4 @@
+
 function Productos() {
   return (
     <>
@@ -10,9 +11,7 @@ function Productos() {
             <th scope="col">Acciones</th>
           </tr>
         </thead>
-        <tbody>
-          
-        </tbody>
+        <tbody></tbody>
       </table>
     </>
   );
