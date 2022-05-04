@@ -1,13 +1,20 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { crearNuevoProductoAction } from "../actions/productoActions";
+import Spinner from "../components/Spinner";
 
 function NuevoProducto() {
+  const navigate = useNavigate();
   const [formProduct, setFormProduct] = useState({
     producto: "",
     precio: 0,
   });
   const dispatch = useDispatch();
+
+  //Acceder al state
+  const cargando = useSelector((state) => state.productos.loading);
+  const error = useSelector((state) => state.productos.error);
 
   const agregarProducto = (producto) =>
     dispatch(crearNuevoProductoAction(producto));
@@ -19,6 +26,11 @@ function NuevoProducto() {
       return;
     }
     agregarProducto(formProduct);
+    setFormProduct({
+      producto: "",
+      precio: 0,
+    });
+    navigate("/");
   };
 
   return (
@@ -68,6 +80,12 @@ function NuevoProducto() {
                 className="btn btn-primary text-uppercase d-block w-100"
               />
             </form>
+            {cargando ? <Spinner /> : null}
+            {error ? (
+              <p className="alert alert-danger p-2 mt-4 text-center">
+                Hubo un error
+              </p>
+            ) : null}
           </div>
         </div>
       </div>
