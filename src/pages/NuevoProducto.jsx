@@ -7,7 +7,7 @@ import Spinner from "../components/Spinner";
 function NuevoProducto() {
   const navigate = useNavigate();
   const [formProduct, setFormProduct] = useState({
-    producto: "",
+    nombre: "",
     precio: 0,
   });
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ function NuevoProducto() {
     }
     agregarProducto(formProduct);
     setFormProduct({
-      producto: "",
+      nombre: "",
       precio: 0,
     });
     navigate("/");
@@ -46,7 +46,7 @@ function NuevoProducto() {
                   type="text"
                   className="form-control"
                   placeholder="Nombre del Producto"
-                  name="producto"
+                  name="nombre"
                   id="producto"
                   value={formProduct.nombre}
                   onChange={(e) =>

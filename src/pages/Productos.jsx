@@ -13,6 +13,7 @@ function Productos() {
   useEffect(() => {
     dispatch(obtenerProductosAction());
   }, []);
+
   if (cargando) return <Spinner />;
 
   return (
