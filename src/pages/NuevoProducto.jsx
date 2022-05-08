@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { crearNuevoProductoAction } from "../actions/productoActions";
 import Spinner from "../components/Spinner";
+import { mostrarAlerta, ocultarAlerta } from "../actions/alertaActions";
 
 function NuevoProducto() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ function NuevoProducto() {
   //Acceder al state
   const cargando = useSelector((state) => state.productos.loading);
   const error = useSelector((state) => state.productos.error);
+  const alerta = useSelector((state) => state.alerta.alerta);
 
   const agregarProducto = (producto) =>
     dispatch(crearNuevoProductoAction(producto));
@@ -22,9 +24,14 @@ function NuevoProducto() {
   const submitNuevoProducto = (e) => {
     e.preventDefault();
     if (formProduct.producto === "" || formProduct.precio === 0) {
-      alert("Por favor, llene todos los campos");
+      const alerta = {
+        msg: "Todos los campos son obligatorios",
+        clases: "alert alert-danger text-center text-uppercase p-3",
+      };
+      dispatch(mostrarAlerta(alerta));
       return;
     }
+    dispatch(ocultarAlerta());
     agregarProducto(formProduct);
     setFormProduct({
       nombre: "",
@@ -35,6 +42,7 @@ function NuevoProducto() {
 
   return (
     <div className="row justify-content-center">
+      {alerta ? <div className={alerta.clases}>{alerta.msg}</div> : null}
       <div className="col-md-8">
         <div className="card">
           <div className="card-body">
